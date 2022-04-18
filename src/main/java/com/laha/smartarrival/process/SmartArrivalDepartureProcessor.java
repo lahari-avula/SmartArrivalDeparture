@@ -16,28 +16,28 @@ public class SmartArrivalDepartureProcessor implements EventProcessor<Telematics
 
 	@Autowired
 	MySqlConnectionApp aap;
-	
+
 	@Override
 	public SmartADResponse execute(TelematicsLocationRequest request) {
-		
+
 		SmartADResponse response = new SmartADResponse();
 		Customer customer = null;
-		
+        //validations
 		if(request.getAccountId() != null)
 		{
 			 customer = aap.getCustomerInfo(request.getAccountId());
-			
-			if(customer == null || customer.getAcc_id() == null) {	
+
+			if(customer == null || customer.getAccountId() == null) {
 			response.setStatus("Error: No valid account found");
 			return response;
 			}
 		}
-		else 
+		else
 		{
 			response.setStatus("Error: AccountId cannot be null");
 			return response;
 		}
-		
+
 		Location location =  request.getLocation();
 		if(location == null)
 		{
@@ -65,9 +65,7 @@ public class SmartArrivalDepartureProcessor implements EventProcessor<Telematics
 				response.setStatus("Error: Longitude values must range between -180 and 180");
 				return response;
 			}
-			
-			
-			
+
 		}
 		if(request.getMessageType() == null || !"keyoff".equalsIgnoreCase(request.getMessageType()) && !"keyon".equalsIgnoreCase(request.getMessageType()))
 		{
@@ -75,13 +73,13 @@ public class SmartArrivalDepartureProcessor implements EventProcessor<Telematics
 			return response;
 		}
 		//process for doorlock unlock
-		double finalDistance = Utils.distance(location.getLatitude(),customer.getLat(),location.getLongitude(),customer.getLongitude());
-		
-		
+		double finalDistance = Utils.distance(location.getLatitude(),customer.getLatitude(),location.getLongitude(),customer.getLongitude());
+
+
 		RemoteControl remoteControl = new RemoteControl();
-		
+
 		if(finalDistance < 50 && "keyoff".equalsIgnoreCase(request.getMessageType())) {
-			
+			//compile response and return it
 			remoteControl.setDoorUnlock(true);
 			response.setData(remoteControl);
 			response.setStatus("Success");
@@ -90,10 +88,9 @@ public class SmartArrivalDepartureProcessor implements EventProcessor<Telematics
 				remoteControl.setDoorUnlock(false);
 				response.setData(remoteControl);
 				response.setStatus("success");
-			
+
 		}
-		//compile response and return it
-		
+
 		return response;
 	}
 

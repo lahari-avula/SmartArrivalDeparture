@@ -4,7 +4,7 @@ public class TelematicsLocationRequest {
 	private String accountId;
 	private Location location;
 	private String messageType;
-	
+
 	public String getAccountId() {
 		return accountId;
 	}
