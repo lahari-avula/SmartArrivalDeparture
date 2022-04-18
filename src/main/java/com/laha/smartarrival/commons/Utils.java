@@ -1,7 +1,7 @@
 package com.laha.smartarrival.commons;
 
 public class Utils {
-	
+
 	public static double distance(double lat1, double lat2, double lon1, double lon2) {
 
 // The math module contains a function

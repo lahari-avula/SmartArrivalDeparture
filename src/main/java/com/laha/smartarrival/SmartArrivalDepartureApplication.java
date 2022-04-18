@@ -4,12 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SmartarrivalApplication {
+public class SmartArrivalDepartureApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SmartarrivalApplication.class, args);
-		
-		
+		SpringApplication.run(SmartArrivalDepartureApplication.class, args);
 	}
 
 }
