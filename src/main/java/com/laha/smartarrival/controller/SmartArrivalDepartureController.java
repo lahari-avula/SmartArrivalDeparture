@@ -22,23 +22,18 @@ import com.laha.smartarrival.process.Greeting;
 import com.laha.smartarrival.process.SmartArrivalDepartureProcessor;
 
 @RestController
-public class GreetingController {
-	
+public class SmartArrivalDepartureController {
+
 	@Autowired
 	EventProcessor<TelematicsLocationRequest, SmartADResponse> eventProcessor;
 
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
-	@GetMapping("/greeting")
-	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return new Greeting(counter.incrementAndGet(), String.format(template, name));
-	}
-
-	@PostMapping(path="/publish/location/data", consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/publish/location/data", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public SmartADResponse accountDetails(@RequestBody TelematicsLocationRequest request) {
-		//TODO: add callable to execute on a (thread/instance/callable)
-	
+		// TODO: add callable to execute on a (thread/instance/callable)
+
 		return eventProcessor.execute(request);
 	}
 
