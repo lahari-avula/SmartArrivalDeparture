@@ -23,5 +23,17 @@ public class TelematicsLocationRequest {
 	public void setMessageType(String messageType) {
 		this.messageType = messageType;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TelematicsLocationRequest [accountId=");
+		builder.append(accountId);
+		builder.append(", location=");
+		builder.append(location);
+		builder.append(", messageType=");
+		builder.append(messageType);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

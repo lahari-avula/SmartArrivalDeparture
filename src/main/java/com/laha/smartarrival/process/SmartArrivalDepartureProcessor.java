@@ -18,7 +18,7 @@ public class SmartArrivalDepartureProcessor implements EventProcessor<Telematics
 	MySqlConnectionApp aap;
 
 	@Override
-	public SmartADResponse execute(TelematicsLocationRequest request) {
+	public SmartADResponse execute(TelematicsLocationRequest request) throws InterruptedException {
 
 		SmartADResponse response = new SmartADResponse();
 		Customer customer = null;
@@ -74,8 +74,7 @@ public class SmartArrivalDepartureProcessor implements EventProcessor<Telematics
 		}
 		//process for doorlock unlock
 		double finalDistance = Utils.distance(location.getLatitude(),customer.getLatitude(),location.getLongitude(),customer.getLongitude());
-
-
+		
 		RemoteControl remoteControl = new RemoteControl();
 
 		if(finalDistance < 50 && "keyoff".equalsIgnoreCase(request.getMessageType())) {
